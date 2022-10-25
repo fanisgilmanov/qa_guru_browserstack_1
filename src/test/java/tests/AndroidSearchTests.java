@@ -13,10 +13,10 @@ import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
 
 public class AndroidSearchTests extends TestBase {
+
+
     @Test
     @Tag("android")
-    @Feature("Мобильное приложение Wikipedia")
-    @Story("Поиск в Wikipedia")
     @DisplayName("Проверка поля Search")
     void searchTestAppium() {
         back();
@@ -27,12 +27,11 @@ public class AndroidSearchTests extends TestBase {
         step("Проверяем, что заданное значение найдено", () ->
                 $$(AppiumBy.id("org.wikipedia.alpha:id/page_list_item_title"))
                         .shouldHave(sizeGreaterThan(0)));
+
     }
 
     @Test
     @Tag("android")
-    @Feature("Мобильное приложение Wikipedia")
-    @Story("Проверка вкладок на стартовой странице Wikipedia")
     @DisplayName("Проверка вкладки Search")
     void checkSearchTabTest() {
         back();
@@ -42,12 +41,11 @@ public class AndroidSearchTests extends TestBase {
         step("Проверяем, что открылась нужная страница", () -> {
             $(AppiumBy.id("org.wikipedia.alpha:id/history_title")).shouldHave(Condition.text("History"));
         });
+
     }
 
     @Test
     @Tag("android")
-    @Feature("Мобильное приложение Wikipedia")
-    @Story("Проверка вкладок на стартовой странице Wikipedia")
     @DisplayName("Проверка вкладки Saved")
     void checkSavedTabTest() {
         back();
@@ -57,5 +55,6 @@ public class AndroidSearchTests extends TestBase {
         step("Проверяем, что открылась нужная страница", () -> {
             $(AppiumBy.id("org.wikipedia.alpha:id/positiveButton")).shouldHave(Condition.text("LOG IN / JOIN WIKIPEDIA"));
         });
+
     }
 }

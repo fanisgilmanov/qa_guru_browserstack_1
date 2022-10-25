@@ -1,7 +1,9 @@
 package drivers;
 
 import com.codeborne.selenide.WebDriverProvider;
+import config.BrowserstackConfig;
 import config.CredConfig;
+import config.DeviceConfig;
 import org.aeonbits.owner.ConfigFactory;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.MutableCapabilities;
@@ -12,26 +14,27 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class BrowserstackMobileDriver implements WebDriverProvider {
+    CredConfig config = ConfigFactory.create(CredConfig.class, System.getProperties());
+    static  final BrowserstackConfig browserstackConfig = ConfigFactory.create(BrowserstackConfig.class, System.getProperties());
     @Override
     public WebDriver createDriver(Capabilities capabilities) {
-        CredConfig config = ConfigFactory.create(CredConfig.class, System.getProperties());
         MutableCapabilities mutableCapabilities = new MutableCapabilities();
         mutableCapabilities.merge(capabilities);
         mutableCapabilities.setCapability("browserstack.user", config.user());
         mutableCapabilities.setCapability("browserstack.key", config.key());
         mutableCapabilities.setCapability("app", config.appBS());
-        mutableCapabilities.setCapability("device", "Samsung Galaxy S22");
-        mutableCapabilities.setCapability("os_version", "12.0");
-        mutableCapabilities.setCapability("project", "First Java Project");
-        mutableCapabilities.setCapability("build", "browserstack-build-1");
-        mutableCapabilities.setCapability("name", "first_test");
+        mutableCapabilities.setCapability("device", browserstackConfig.device());
+        mutableCapabilities.setCapability("os_version", browserstackConfig.osVersion());
+        mutableCapabilities.setCapability("project", browserstackConfig.project());
+        mutableCapabilities.setCapability("build", browserstackConfig.build());
+        mutableCapabilities.setCapability("name", browserstackConfig.name());
 
         return new RemoteWebDriver(getBrowserstackUrl(), mutableCapabilities);
     }
 
     public static URL getBrowserstackUrl() {
         try {
-            return new URL("http://hub.browserstack.com/wd/hub");
+            return new URL(browserstackConfig.bsURL());
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
