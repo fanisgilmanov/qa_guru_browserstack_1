@@ -3,7 +3,7 @@ package config;
 import org.aeonbits.owner.Config;
 
 @Config.Sources({
-        "classpath:config/emulationPhone.properties"
+        "classpath:config/${deviceHost}.properties"
 })
 public interface RealMobileConfig extends Config {
     @Key("platform_name")
